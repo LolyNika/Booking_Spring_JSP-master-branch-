@@ -20,7 +20,7 @@ public class PaymethodDTO {
     private int cardNumber;
     private int cvsCode;
     private int transactionId;
-    private int transactionDate;
+    private String transactionDate;
     private String transactionStatus;
     private int sum;
 }

@@ -68,7 +68,8 @@ public class BookingController {
 
     /** The method use info about a Guest to redirect to create a new Booking */
     @GetMapping(value = {"/enter"})
-    public ModelAndView enter(@RequestParam("nameUser") String nameUser,
+    public ModelAndView enter(@RequestParam("price") int price,
+                              @RequestParam("nameUser") String nameUser,
                               @RequestParam("idroom") int idroom,
                               @RequestParam("rateId") int rateId,
                               @RequestParam("nameroom") String nameroom) throws SQLException {
@@ -78,6 +79,7 @@ public class BookingController {
         model.addObject("idroomm", idroom);
         model.addObject("rateId", rateId);
         model.addObject("nameroomm", nameroom);
+        model.addObject("price", price);
         return model;
     }
 
@@ -86,6 +88,7 @@ public class BookingController {
     public String create(@RequestParam("idroom") int idRoom,
                          @RequestParam("rateId") int rateId,
                          @RequestParam("nameroom") String nameroom,
+                         @RequestParam("price") int price,
 
                          @RequestParam("userId") int userId,
                          @RequestParam("roleId") int roleId,
@@ -100,16 +103,16 @@ public class BookingController {
                          @RequestParam("childrencount") int childrencount,
                          @RequestParam("roomtype") String roomtype,
                          @RequestParam("comment") String comment,
-                         @RequestParam("bookingstatus") String bookingstatus,
+//                         @RequestParam("bookingstatus") String bookingstatus,
 
                          @RequestParam("name") String name,
                          @RequestParam("cardholderName") String cardholderName,
                          @RequestParam("expirationDate") int expirationDate,
                          @RequestParam("cardNumber") int cardNumber,
-                         @RequestParam("cvsCode") int cvsCode,
-                         @RequestParam("transactionDate") int transactionDate,
-                         @RequestParam("transactionStatus") String transactionStatus,
-                         @RequestParam("sum") int sum
+                         @RequestParam("cvsCode") int cvsCode
+//                         @RequestParam("transactionDate") int transactionDate,
+//                         @RequestParam("transactionStatus") String transactionStatus,
+//                         @RequestParam("sum") int sum
                          ) throws SQLException {
         int min = 5;
         int max = 1000;
@@ -152,9 +155,9 @@ public class BookingController {
         paymethodDTO.setCardNumber(cardNumber);
         paymethodDTO.setCvsCode(cvsCode);
         paymethodDTO.setTransactionId(i);
-        paymethodDTO.setTransactionDate(transactionDate);
-        paymethodDTO.setTransactionStatus(transactionStatus);
-        paymethodDTO.setSum(sum);
+//        paymethodDTO.setTransactionDate(transactionDate);
+        paymethodDTO.setTransactionStatus("Ok");
+        paymethodDTO.setSum(price);
         paymethodService.create(paymethodDTO);
 
         BookingDTO bookingDTO = new BookingDTO();
@@ -165,7 +168,7 @@ public class BookingController {
         bookingDTO.setChildrenCount(childrencount);
         bookingDTO.setRoomType(roomtype);
         bookingDTO.setComment(comment);
-        bookingDTO.setBookingStatus(bookingstatus);
+        bookingDTO.setBookingStatus("Active");
         bookingDTO.setPaymethod(paymethodDTO);
         bookingDTO.setGuest(guestDTO);
         bookingDTO.setRoom(roomDTO);
@@ -206,10 +209,26 @@ public class BookingController {
 //    }
 
     /** The method delete by Id a Guest */
-    @GetMapping(value = {"/{idBooking}/delete"})
-    public String delete(@PathVariable int idBooking, Model model) throws SQLException {
+    @GetMapping(value = {"/delete"})
+    public String delete(@RequestParam("idBooking") int idBooking,
+                         @RequestParam("rateId") int rateId,
+                         @RequestParam("nameRoom") String nameRoom,
+                         @RequestParam("idRoom") int idRoom,
+                         Model model) throws SQLException {
         bookingService.delete(idBooking);
         paymethodService.delete(idBooking);
+
+        RateDTO rateDTO = new RateDTO();
+        rateDTO.setRateId(rateId);
+
+        RoomstatusDTO roomstatusDTO = new RoomstatusDTO();
+        roomstatusDTO.setRoomstatusId(2);
+
+        RoomDTO roomDTO = new RoomDTO();
+        roomDTO.setIdRoom(idRoom);
+        roomDTO.setNameRoom(nameRoom);
+        roomDTO.setRoomstatus(roomstatusDTO);
+        roomService.update(roomDTO);
         return "redirect:/bookings/list";
     }
 

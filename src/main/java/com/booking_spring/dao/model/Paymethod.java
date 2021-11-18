@@ -43,7 +43,7 @@ public class Paymethod implements Serializable {
     private int transactionId;
 
     @Column(name = "transactionDate")
-    private int transactionDate;
+    private String transactionDate;
 
     @Column(name = "transactionStatus")
     private String transactionStatus;

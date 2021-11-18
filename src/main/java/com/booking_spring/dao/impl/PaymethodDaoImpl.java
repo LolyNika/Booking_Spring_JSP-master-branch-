@@ -43,7 +43,7 @@ public class PaymethodDaoImpl implements IPaymethodDAO {
                 "transactionDate," +
                 "transactionStatus, " +
                 "sum\n" +
-                ") VALUES (?,?, ?,?, ?,?, ?,?, ?,?)";
+                ") VALUES (?,?, ?,?, ?,?, ?,NOW(), ?,?)";
         jdbcTemplate.update(SQL,
                 paymethod.getPaymethodId(),
                 paymethod.getName(),
@@ -52,7 +52,7 @@ public class PaymethodDaoImpl implements IPaymethodDAO {
                 paymethod.getCardNumber(),
                 paymethod.getCvsCode(),
                 paymethod.getTransactionId(),
-                paymethod.getTransactionDate(),
+//                paymethod.getTransactionDate(),
                 paymethod.getTransactionStatus(),
                 paymethod.getSum());
         return paymethod;

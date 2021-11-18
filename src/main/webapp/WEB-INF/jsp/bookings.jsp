@@ -105,13 +105,13 @@
             <th scope="col">Action</th>
 
             <%--            <th scope="col">#</th>--%>
-<%--            <th scope="col">Name Guest</th>--%>
-<%--            <th scope="col">Mobile</th>--%>
-<%--            <th scope="col">Email</th>--%>
-<%--            <th scope="col">Address</th>--%>
+            <%--            <th scope="col">Name Guest</th>--%>
+            <%--            <th scope="col">Mobile</th>--%>
+            <%--            <th scope="col">Email</th>--%>
+            <%--            <th scope="col">Address</th>--%>
 
             <%--            <th scope="col">#</th>--%>
-<%--            <th scope="col">Name Room</th>--%>
+            <%--            <th scope="col">Name Room</th>--%>
         </tr>
         </thead>
         <tbody>
@@ -138,12 +138,19 @@
 
                 <td>${bookings.roomstatus.nameStatus}</td>
                 <td>
-<%--                    <a href="/rooms/${rooms.idRoom}/editrooms">--%>
-<%--                        <button type="submit" class="btn btn-primary">Edit Room</button>--%>
-<%--                    </a>--%>
-                    <a href="/bookings/${bookings.idBooking}/delete">
+                        <%--                    <a href="/rooms/${rooms.idRoom}/editrooms">--%>
+                        <%--                        <button type="submit" class="btn btn-primary">Edit Room</button>--%>
+                        <%--                    </a>--%>
+                    <form action='/bookings/delete' method='get'>
+                        <input type="hidden" value="${bookings.idBooking}" name="idBooking"/>
+                        <input type="hidden" value="${bookings.room.nameRoom}" name="nameRoom"/>
+                        <input type="hidden" value="${bookings.rate.rateId}" name="rateId"/>
+                        <input type="hidden" value="${bookings.room.idRoom}" name="idRoom"/>
                         <button type="submit" class="btn btn-primary">Delete Book</button>
-                    </a>
+                    </form>
+<%--                    <a href="/bookings/${bookings.idBooking}/delete">--%>
+<%--                        <button type="submit" class="btn btn-primary">Delete Book</button>--%>
+<%--                    </a>--%>
                 </td>
             </tr>
         </c:forEach>

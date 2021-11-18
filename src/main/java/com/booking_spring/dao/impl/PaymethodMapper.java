@@ -21,7 +21,7 @@ public class PaymethodMapper implements RowMapper {
         paymethod.setCardNumber(rs.getInt("cardNumber"));
         paymethod.setCvsCode(rs.getInt("cvsCode"));
         paymethod.setTransactionId(rs.getInt("transactionId"));
-        paymethod.setTransactionDate(rs.getInt("transactionDate"));
+        paymethod.setTransactionDate(rs.getString("transactionDate"));
         paymethod.setTransactionStatus(rs.getString("transactionStatus"));
         paymethod.setSum(rs.getInt("sum"));
         return paymethod;
